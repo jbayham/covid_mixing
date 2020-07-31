@@ -1,0 +1,104 @@
+---
+title: "Time Contact Matrices (tentative)"
+author: "Jude Bayham, jimi adams, "
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+
+lapply(c("tidyverse","gridExtra","scales","cowplot","grid"),
+       require,character.only=T)
+
+file.list <- dir("build_pcm/outputs/pcm_csv/",full.names = T)
+
+#lab_text <- c("0-29","30-59","60+")
+lab_text <- c("0-18","19-29","30-59","60+")
+```
+
+## Introduction
+
+The goals of this report are to: describe estimates of the approximate number of contacts people typically have in different locations (e.g., home, school, restaurants) and how this might be used to inform decisions about the potential impacts of relaxation of social distancing.
+
+## Contact Matrices
+
+A central question is how policies to open certain business such as restaurants and schools may impact the transmission of COVID-19. There is guidance available that describes the relative risks of re-opening different types of businesses (e.g., https://www.centerforhealthsecurity.org/our-work/pubs_archive/pubs-pdfs/2020/200417-reopening-guidance-governors.pdf and https://www.cdc.gov/coronavirus/2019-ncov/community/organizations/businesses-employers.html). These recommendations are based largely on expert judgment, given the limited data on the impact of policy measures on human behavior relevant to infection risk in the context of the COVID-19 epidemic.
+
+Here, we use data from surveys conducted prior to the COVID-19 pandemic to estimate the proportion of an average person’s contacts that occur in different settings. Given the strong age-related patterns of asymptomatic infections and morbidity, we pay particular attention to contact patterns by age-group and between age groups. We focus on people’s contacts outside of the home, recognizing that prior studies of influenza-relevant contacts estimate approximately 25% of contacts occur at home.  
+
+We use information from the American Time-Use Survey to understand the potential for SARS-CoV-2 transmission in locations of interest.  Pre-epidemic time-use data provide evidence for the amount of time people from different age groups spend in the same locations (e.g., restaurants).  While time spent in the same location does not necessarily equate to contacts, it does serve as an indicator of the potential for transmission, especially given emerging evidence for spread of infections in indoor spaces in the absence of close contact [e.g., 3].  
+
+We use reported time in various locations by four age groups (0-18, 19-29, 30-59, 60+) to quantify the proportion of time that individuals spend in locations of interest.  We estimate people’s time spent co-present with others in the same locations with others, and aggregate these into mixing patterns within and between groups of the specified age  categories.  The data used are from  the US population between June 1 and August 31 in years 2015 to 2018.
+
+
+
+```{r,warning=FALSE,message=FALSE,fig.cap="Figure 1. Contact matrices based on summer (June 1 to August 31) 2015-2018 for the US population (American Time Use Survey).  Note that time use by children less than 15 yrs old is based on a survey from 1991-1992."}
+
+
+file.list <- dir("build_pcm/outputs/pcm_csv_summer/",full.names = T) %>%
+  str_subset("transport",negate = T)
+
+#lab_text <- c("0-29","30-59","60+")
+lab_text <- c("0-18","19-29","30-59","60+")
+
+to.plot <- map(file.list,
+    function(x){
+      title_text <- str_sub(x,34) %>%
+        tools::file_path_sans_ext()
+      
+      temp_mat <- read_csv(x,col_names = F,col_types = cols())
+      
+      pcm <- as_tibble(cbind(expand.grid(lab_text,lab_text),
+                             unlist(temp_mat))) %>%
+        rename_all(~c("Population","Individual","value")) %>%
+        add_column(title_text)
+      
+      
+      out <- ggplot(pcm,aes(x=Individual,y=Population,fill=value,label=round(value, digits = 1))) +
+        geom_tile(show.legend = F) +
+        geom_label(fill="white",alpha=.8,label.size = NA) +
+        scale_fill_viridis_c(name="") +
+        #theme_minimal(base_size = 13) +
+        theme_minimal() +
+        coord_equal() +
+        labs(#title = "Contact Minutes",
+          x="",
+          y="",
+          subtitle = title_text) 
+      
+     return(out)
+      
+    })
+
+x.grob <- textGrob("Individual", 
+                   gp=gpar(fontsize=15))
+
+y.grob <- textGrob("Members of Group", 
+                   gp=gpar(fontsize=15), rot=90)
+
+p1 <- cowplot::plot_grid(plotlist = to.plot[1:6], 
+                         scale = 1, 
+                         ncol=3,
+                         labels=LETTERS[1:6])
+
+
+grid.arrange(arrangeGrob(p1, bottom = x.grob,left = y.grob))
+
+p2 <- cowplot::plot_grid(plotlist = to.plot[7:12],
+                   scale = 1,
+                   ncol=3,
+                   labels=LETTERS[7:12])
+
+grid.arrange(arrangeGrob(p2, bottom = x.grob,left = y.grob))
+
+```
+
+
+
+
+
+
+
+
+
