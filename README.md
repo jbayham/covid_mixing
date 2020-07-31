@@ -1,4 +1,9 @@
 # COVID  Mixing
+
+Get temp data here: https://drive.google.com/drive/folders/1hgN1zYD8AseD_kR4Nj3xM8mFqMzXUWsx?usp=sharing
+
+Put imputed.mat in build/cache directory.
+
 For code to generate PCMs and simulate epidemics
 
 need general makefile

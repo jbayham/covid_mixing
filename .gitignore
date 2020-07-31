@@ -37,18 +37,6 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-.git/objects/1c/d6ebf6eb243525f44f57a348ec1199f7258ba4
-.git/objects/3a/19fb932df7512282aefcca70aafdd2cdd6494d
-.git/objects/5e/e06d3958a1be425f3e8665165266bd9a7359c5
-.git/objects/75/8a96ff63dc368a7c22d40cd8964170d1663881
-.git/objects/98/0515a9858d4612d274d29e97ad6e3566eef40b
-.git/objects/9d/6b650bcfa636be827cca6c7e0a905f6eb9641d
-.git/objects/a4/950434dbce93977fa8aeb7c556d916dd0bdfff
-.git/objects/bd/ec8f7c6b276f77466a2a7030632c559af3c000
-.git/objects/ce/14e5e9d094c89ee3a612a5bbd07262b6aafcba
-.git/objects/d3/3c7e27f3a36cc5dcd220a3478a8fe69101fa5b
-.git/objects/d5/986714938d6fbb370798ee8901adb4ad20bb13
-.git/objects/e1/17c338c71f43e9351498a3947180a7d3c20144
 build_pcm/cache/imputed.mat
 build_pcm/cache/MixingDataset_HH.mat
 build_pcm/inputs/atus_data.mat
