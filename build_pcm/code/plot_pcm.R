@@ -3,11 +3,11 @@
 lapply(c("tidyverse","gridExtra","scales","ggExtra"),
        require,character.only=T)
 
-path_name <- "build_pcm/outputs/pcm_csv_summer/"
+path_name <- "build_pcm/outputs/pcm_csv/"
 file.list <- dir(path_name,full.names = T)
 
 #lab_text <- c("0-29","30-59","60+")
-lab_text <- c("0-18","19-29","30-59","60+")
+lab_text <- c("0-19","20-39","40-64","65+")
 
 map(file.list,
     function(x){
@@ -32,7 +32,7 @@ map(file.list,
              title = title_text)
       
       
-      ggplot2::ggsave(str_c("build_pcm/outputs/age3_location/",title_text,".png"),
+      ggplot2::ggsave(str_c("build_pcm/outputs/age4_location/",title_text,".png"),
              height = 4, width = 4.3,units = "in")
       
       margin_data<- pcm %>%
@@ -41,7 +41,7 @@ map(file.list,
       
       ggplot(margin_data,aes(x=Individual,y=value)) +
         geom_col() +
-        geom_text(aes(y=value+6,label=round(value,0))) +
+        geom_label(aes(y=5,label=round(value,0)),fill="white",alpha=.8,label.size = NA,vjust=0) +
         scale_y_continuous(expand = c(0, 0),limits = c(0,max(margin_data$value)*1.25)) +
         #ylim(0,max(margin_data$value)+10) +
         labs(x="",
@@ -51,11 +51,13 @@ map(file.list,
               axis.text.x = element_blank(),
               axis.ticks.x = element_blank())
       
-      ggplot2::ggsave(str_c("build_pcm/outputs/age3_location/",title_text,"margin.png"),
+      ggplot2::ggsave(str_c("build_pcm/outputs/age4_location/",title_text,"margin.png"),
                       height = 1, width = 3.2,units = "in")
       
     })
 
+
+###################################
 
 public <- as_tibble(cbind(expand.grid(lab_text,lab_text),
                           unlist(read_csv(str_c(path_name,"All Public.csv"),col_names = F)))) %>%
@@ -86,7 +88,7 @@ map(str_subset(file.list,"All Public",negate = T),
         labs(#title = "Contact Minutes",
              title = title_text)
       
-      ggplot2::ggsave(str_c("build_pcm/outputs/age3_location/",title_text,"_percent.png"),
+      ggplot2::ggsave(str_c("build_pcm/outputs/age4_location/",title_text,"_percent.png"),
              height = 4, width = 4.3,units = "in")
       
     })

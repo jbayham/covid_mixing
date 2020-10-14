@@ -47,7 +47,7 @@ else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 contact=reweight(contact(:,[{'tucaseid','actnum','person','wgt','fwgt','where','start','stop','x_mark','year','month','day','weekend','age'} labels(1,:)])); %reweighting ATUS data based on individual weights
 contact=DateFilter(contact,start,stop);
-contact=OtherFilter(contact,filtervar,filtervals);
+%contact=OtherFilter(contact,filtervar,filtervals);
 
 cut=unique(cut(:,varlist),'rows'); %doing this here because it could be used in both matrix calculations
 

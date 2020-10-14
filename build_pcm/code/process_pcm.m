@@ -9,8 +9,16 @@ for ii=1:length(location_pcms)
 end
 
 %Collapsed into matrix
-public=full(spcellsum(location_pcms,1));
+public=cell2mat(full(spcellsum(location_pcms,1)));
 csvwrite('build_pcm/outputs/pcm_csv/All Public.csv',public)
+
+
+%Exporting household matrix
+csvwrite('build_pcm/outputs/pcm_csv/Household.csv',fammat)
+
+%Exporting public + household matrix
+csvwrite('build_pcm/outputs/pcm_csv/Public and Household.csv',fammat+public)
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %By time

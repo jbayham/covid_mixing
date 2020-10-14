@@ -14,14 +14,14 @@ contact.hhsize(contact.hhsize>5)=5;
 %Creating the age rng variable
 contact.age(contact.age>80)=80;
 %contact.agerng=convertcon(double(contact(:,'age')),[0 5 13 18 25 35 45 55 65 100]');
-%contact.agerng=convertcon(double(contact(:,'age')),[0 18 29 59 100]');
-contact.agerng=contact.age+1;
+contact.agerng=convertcon(double(contact(:,'age')),[0 19 39 64 100]');
+%contact.agerng=contact.age+1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Creating category labels for stratifying characteristics
 %labels(1,:)={'agerng','hhinc','hhsize'};  
 labels(1,:)={'agerng'}; 
 %labels{2,1}={'0-4';'5-12';'13-17';'18-24';'25-34';'35-44';'45-54';'55-64';'65+'};
-labels{2,1}={'0-18';'19-29';'30-59';'60+'};
+labels{2,1}={'0-19';'20-39';'40-64';'65+'};
 %labels{2,1}=string(unique(contact.agerng));
 %labels{2,2}={'0-25';'25-50';'50-100';'100-150';'150+'};
 %labels{2,3}={'1';'2';'3';'4';'5+'};
